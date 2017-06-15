@@ -39,17 +39,17 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.tripButton = new System.Windows.Forms.Button();
+            this.stopsButton = new System.Windows.Forms.Button();
+            this.forbiddenButton = new System.Windows.Forms.Button();
             this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.button4 = new System.Windows.Forms.Button();
+            this.exportButton = new System.Windows.Forms.Button();
             this.toolTipOnAll = new System.Windows.Forms.ToolTip(this.components);
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -154,52 +154,56 @@
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
             // 
-            // button1
+            // tripButton
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(158, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "import trip stops";
-            this.toolTipOnAll.SetToolTip(this.button1, "load a txt file containing the trip details, in the format of provided trip.txt");
-            this.button1.UseVisualStyleBackColor = true;
+            this.tripButton.Location = new System.Drawing.Point(12, 12);
+            this.tripButton.Name = "tripButton";
+            this.tripButton.Size = new System.Drawing.Size(158, 23);
+            this.tripButton.TabIndex = 8;
+            this.tripButton.Text = "import trip stops";
+            this.toolTipOnAll.SetToolTip(this.tripButton, "load a txt file containing the trip details, in the format of provided trip.txt");
+            this.tripButton.UseVisualStyleBackColor = true;
+            this.tripButton.Click += new System.EventHandler(this.tripButton_Click);
             // 
-            // button2
+            // stopsButton
             // 
-            this.button2.Location = new System.Drawing.Point(12, 40);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(158, 23);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "import expected stops";
-            this.toolTipOnAll.SetToolTip(this.button2, "load a txt file containing the expected trip stops, in the format of provided sto" +
+            this.stopsButton.Location = new System.Drawing.Point(12, 40);
+            this.stopsButton.Name = "stopsButton";
+            this.stopsButton.Size = new System.Drawing.Size(158, 23);
+            this.stopsButton.TabIndex = 9;
+            this.stopsButton.Text = "import expected stops";
+            this.toolTipOnAll.SetToolTip(this.stopsButton, "load a txt file containing the expected trip stops, in the format of provided sto" +
         "ps.txt\r\nIf an expected is not in the stops exported a yellow pin is to be create" +
         "d\r\n");
-            this.button2.UseVisualStyleBackColor = true;
+            this.stopsButton.UseVisualStyleBackColor = true;
+            this.stopsButton.Click += new System.EventHandler(this.stopsButton_Click);
             // 
-            // button3
+            // forbiddenButton
             // 
-            this.button3.Location = new System.Drawing.Point(12, 68);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(158, 23);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "import forbidden spots";
-            this.toolTipOnAll.SetToolTip(this.button3, "load a txt file with the coordinates of the spots that the trip should not stop");
-            this.button3.UseVisualStyleBackColor = true;
+            this.forbiddenButton.Location = new System.Drawing.Point(12, 68);
+            this.forbiddenButton.Name = "forbiddenButton";
+            this.forbiddenButton.Size = new System.Drawing.Size(158, 23);
+            this.forbiddenButton.TabIndex = 10;
+            this.forbiddenButton.Text = "import forbidden spots";
+            this.toolTipOnAll.SetToolTip(this.forbiddenButton, "load a txt file with the coordinates of the spots that the trip should not stop");
+            this.forbiddenButton.UseVisualStyleBackColor = true;
+            this.forbiddenButton.Click += new System.EventHandler(this.forbiddenButton_Click);
             // 
             // openFileDialog3
             // 
             this.openFileDialog3.FileName = "openFileDialog3";
             // 
-            // button4
+            // exportButton
             // 
-            this.button4.Location = new System.Drawing.Point(141, 97);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(104, 96);
-            this.button4.TabIndex = 11;
-            this.button4.Text = "export";
-            this.toolTipOnAll.SetToolTip(this.button4, "Save a txt file with the details of the stops you have chosen and pop up a google" +
+            this.exportButton.Location = new System.Drawing.Point(141, 97);
+            this.exportButton.Name = "exportButton";
+            this.exportButton.Size = new System.Drawing.Size(104, 96);
+            this.exportButton.TabIndex = 11;
+            this.exportButton.Text = "export";
+            this.toolTipOnAll.SetToolTip(this.exportButton, "Save a txt file with the details of the stops you have chosen and pop up a google" +
         " maps with the chosen stops pinned");
-            this.button4.UseVisualStyleBackColor = true;
+            this.exportButton.UseVisualStyleBackColor = true;
+            this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
             // 
             // toolTipOnAll
             // 
@@ -231,6 +235,15 @@
             this.toolTipOnAll.SetToolTip(this.checkBox3, "treat stops in forbidden areas like red stops");
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
+            // numericUpDown3
+            // 
+            this.numericUpDown3.Location = new System.Drawing.Point(265, 69);
+            this.numericUpDown3.Name = "numericUpDown3";
+            this.numericUpDown3.Size = new System.Drawing.Size(120, 22);
+            this.numericUpDown3.TabIndex = 15;
+            this.toolTipOnAll.SetToolTip(this.numericUpDown3, "length in meters of the square with center each forbidden spot, whose area will b" +
+        "e considered forbidden");
+            // 
             // textBox3
             // 
             this.textBox3.Enabled = false;
@@ -240,15 +253,6 @@
             this.textBox3.Size = new System.Drawing.Size(69, 22);
             this.textBox3.TabIndex = 14;
             this.textBox3.Text = "distance";
-            // 
-            // numericUpDown3
-            // 
-            this.numericUpDown3.Location = new System.Drawing.Point(265, 69);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(120, 22);
-            this.numericUpDown3.TabIndex = 15;
-            this.toolTipOnAll.SetToolTip(this.numericUpDown3, "length in meters of the square with center each forbidden spot, whose area will b" +
-        "e considered forbidden");
             // 
             // Form1
             // 
@@ -260,10 +264,10 @@
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.exportButton);
+            this.Controls.Add(this.forbiddenButton);
+            this.Controls.Add(this.stopsButton);
+            this.Controls.Add(this.tripButton);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.numericUpDown2);
@@ -295,12 +299,12 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button tripButton;
+        private System.Windows.Forms.Button stopsButton;
+        private System.Windows.Forms.Button forbiddenButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog3;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.ToolTip toolTipOnAll;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;

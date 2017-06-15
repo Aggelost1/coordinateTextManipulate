@@ -7,3 +7,12 @@ C:\Users\admin\documents\visual studio 2017\Projects\coordinateTextManpulator\co
 C:\Users\admin\documents\visual studio 2017\Projects\coordinateTextManpulator\coordinateTextManpulator\obj\Debug\coordinateTextManpulator.csproj.GenerateResource.Cache
 C:\Users\admin\documents\visual studio 2017\Projects\coordinateTextManpulator\coordinateTextManpulator\obj\Debug\coordinateTextManpulator.exe
 C:\Users\admin\documents\visual studio 2017\Projects\coordinateTextManpulator\coordinateTextManpulator\obj\Debug\coordinateTextManpulator.pdb
+C:\Users\admin\Desktop\coordinateTextManpulatorcopy\coordinateTextManpulator\bin\Debug\coordinateTextManpulator.exe.config
+C:\Users\admin\Desktop\coordinateTextManpulatorcopy\coordinateTextManpulator\bin\Debug\coordinateTextManpulator.exe
+C:\Users\admin\Desktop\coordinateTextManpulatorcopy\coordinateTextManpulator\bin\Debug\coordinateTextManpulator.pdb
+C:\Users\admin\Desktop\coordinateTextManpulatorcopy\coordinateTextManpulator\obj\Debug\coordinateTextManpulator.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\coordinateTextManpulatorcopy\coordinateTextManpulator\obj\Debug\coordinateTextManpulator.Form1.resources
+C:\Users\admin\Desktop\coordinateTextManpulatorcopy\coordinateTextManpulator\obj\Debug\coordinateTextManpulator.Properties.Resources.resources
+C:\Users\admin\Desktop\coordinateTextManpulatorcopy\coordinateTextManpulator\obj\Debug\coordinateTextManpulator.csproj.GenerateResource.Cache
+C:\Users\admin\Desktop\coordinateTextManpulatorcopy\coordinateTextManpulator\obj\Debug\coordinateTextManpulator.exe
+C:\Users\admin\Desktop\coordinateTextManpulatorcopy\coordinateTextManpulator\obj\Debug\coordinateTextManpulator.pdb
