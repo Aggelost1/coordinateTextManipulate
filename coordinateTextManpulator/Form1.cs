@@ -12,13 +12,13 @@ using System.Windows.Forms;
 
 namespace coordinateTextManpulator
 {
-	public partial class Form1 : Form
-	{
-        
+    public partial class Form1 : Form
+    {
+
         public Form1()
-		{
-			InitializeComponent();
-            
+        {
+            InitializeComponent();
+
         }
 
         // this will be the name of the file the user loads it is initiated as the bufferlist withing our file
@@ -38,36 +38,39 @@ namespace coordinateTextManpulator
         int ind;
         int indx;
         int num;
-        int coordNum=0;
+        int coordNum = 0;
         string iso;
         string substr;
         string LongLat;
         List<int> indexes = new List<int> { -2 };
 
-        
+        //subject to change for now its for square of 150m side
+        int sqrdist1 = 8;
+        int sqrdist2 = 7;
+        int j;
+        int k;
 
 
         // this is subject to change acording to the format of your txt file you import your trip stops
-        string init="(";
-        string fina=")";
+        string init = "(";
+        string fina = ")";
         int distan = 16;
         string timeBefor = ",,,,,,,,";
 
-        
-        
 
-        private int coordinateFind(string s,string start,string fini, int dis)
+
+
+        private int coordinateFind(string s, string start, string fini, int dis)
         {
-           
-            
+
+
             if (s.Contains(start) && s.Contains(fini))
             {
                 place = s.IndexOf(start);
-                fin = s.IndexOf(fini,place +1);
+                fin = s.IndexOf(fini, place + 1);
                 if (fin - place != dis)
                 {
-                 place = -place;
-                    
+                    place = -place;
                 }
             }
             else
@@ -78,25 +81,25 @@ namespace coordinateTextManpulator
             return place;
         }
 
-        private string coordinateIndexIsolate (string s)
+        private string coordinateIndexIsolate(string s)
         {
             // additin of slashes to substr in the beggining is important so that we never get the case of coordinateFind(substr) = -1 while we still have ( and ) in our string
-            substr = "//"+s;
+            substr = "//" + s;
             iso = "/";
             indx = 0;
             indexes.Clear();
             indexes.Add(-1);
-            while (coordinateFind(substr, init, fina, distan) !=-1)
+            while (coordinateFind(substr, init, fina, distan) != -1)
             {
                 coordNum = 0;
-                ind = coordinateFind(substr,init,fina,distan);
-               
+                ind = coordinateFind(substr, init, fina, distan);
+
                 if (ind > -1)
                 {
                     indx = ind - 2 + indx;
                     indexes.Add(indx);
                     iso = iso + "/" + indx.ToString() + "/";
-                    substr ="//" + substr.Substring(ind + 1);
+                    substr = "//" + substr.Substring(ind + 1);
                     indx = indx + 1;
                     coordNum = coordNum + 1;
                 }
@@ -104,27 +107,121 @@ namespace coordinateTextManpulator
                 {
                     substr = "//" + substr.Substring(-ind + 1);
                     //-1=-2+1
-                    indx = indx -ind-1;
+                    indx = indx - ind - 1;
                 }
             }
             iso = iso + "/";
             return iso;
         }
         // subject to change , depends on the format your coordinates are given
-        private  string  getLongLat(string  s, int plc)
+        private string getLongLat(string s, int plc)
         {
-            LongLat = s.Substring(plc+1, distan - 1);
+            LongLat = s.Substring(plc + 1, distan - 1);
             return LongLat;
         }
 
 
-        
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        //subject to change for now its for square of 150m side
+        private bool closeness(string s1, string s2)
         {
-           toolTipOnAll.Active = checkBox2.Checked; 
+            bool rtrn = false;
+            string con1a = s1.Substring(0, 2) + s1.Substring(3, 4);
+            string con1b = s1.Substring(8, 2) + s1.Substring(11, 4);
+            string con2a = s2.Substring(0, 2) + s2.Substring(3, 4);
+            string con2b = s2.Substring(8, 2) + s2.Substring(11, 4);
+
+            try
+            {
+                j = Math.Abs(Convert.ToInt32(con1a) - Convert.ToInt32(con2a));
+                k = Math.Abs(Convert.ToInt32(con1b) - Convert.ToInt32(con2b));
+            }
+            catch
+            {
+                MessageBox.Show("something went wrong trying to convert your coordinates to integers. Most probably you have your report in a different format.");
+            }
+
+            if (j < sqrdist1&& k < sqrdist2)
+            {
+                rtrn = true;
+            }
+            
+            return rtrn;
         }
 
-       
+        // makes sure that the coords are corectly formated
+        private string coordsMakeProper(string s)
+        {
+            if (s == "")
+            {
+                MessageBox.Show("your coordinate file has an empty line");
+                return s;
+            }
+            string str = "";
+            if (s.Contains(","))
+            {
+                int m = s.IndexOf(",");
+                int l = s.IndexOf(".");
+                if (s.Substring(0, m).IndexOf(".") < 0)
+                {
+                    if (m == 2)
+                    {
+                        s = s.Substring(0, m) + "." + s.Substring(m);
+                    }
+                    if (m == 1)
+                    {
+                        s = s.Substring(0, m) + "0." + s.Substring(m);
+                    }
+                }
+                m = s.IndexOf(",");
+                if (s.Substring(m).IndexOf(".") < 0)
+                {
+                    if (s.Substring(m).Length == 3)
+                    {
+                        s = s + ".";
+                    }
+                    if (s.Substring(m).Length == 2)
+                    {
+                        s = s+"0." ;
+                    }
+
+                    m = s.IndexOf(",");
+                }
+                
+                    m = s.IndexOf(",");
+               
+
+                while (m < 7)
+                {
+                    s = s.Substring(0, m) + "0" + s.Substring(m);
+                    m = m + 1;
+                }
+                while (m > 7)
+                {
+                    s = s.Substring(0, m - 1) + s.Substring(m);
+                    m = m - 1;
+                }
+                while (s.Substring(m).Length < 8)
+                {
+                    s = s + "0";
+
+                }
+                while (s.Substring(m).Length > 8)
+                {
+                    s = s.Substring(0, s.Length - 1);
+                }
+                str = s;
+                return str;
+            }
+            return "error";
+        }
+
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            toolTipOnAll.Active = checkBox2.Checked;
+        }
+
+
 
         private void stopsButton_Click(object sender, EventArgs e)
         {
@@ -151,15 +248,30 @@ namespace coordinateTextManpulator
             {
 
                 forbiddenFileName = openFileDialog3.FileName;
+                using (var fltxt = File.OpenText(@forbiddenFileName))
+                {
+                    string a = fltxt.ReadLine();
+                    string a1=null;
+                    string a2=null;
+                    while (a != null)
+                    {
+                        a1 = a.Substring(0);
+                        a1 = coordsMakeProper(a1);
+                        a2 = a2 + a1;
+                        forbiddenList = a;
+                        a = fltxt.ReadLine();
+                       
 
-                forbiddenList = File.ReadAllText(@forbiddenFileName);
+                    }
+                    forbiddenList = a2;
+                }
 
-                tripIndexList = coordinateIndexIsolate(forbiddenList);
 
 
-                MessageBox.Show(  "      here:   " + tripIndexList + "   there      "  + forbiddenList.Substring(indexes[2]));
 
-                
+                MessageBox.Show("      here:   " + forbiddenList + "   there      " + forbiddenList.Substring(15) + "   there      " + forbiddenList.Substring(30));
+
+
 
             }
         }
@@ -180,6 +292,14 @@ namespace coordinateTextManpulator
             }
         }
 
+        private void test_Click(object sender, EventArgs e)
+        {
+            
+                MessageBox.Show("hi");
+                
+        }
+
+
         private void exportButton_Click(object sender, EventArgs e)
         {
             if (indexes[0] != -1)
@@ -187,7 +307,7 @@ namespace coordinateTextManpulator
                 MessageBox.Show("please import trip coordinates");
             }
             else
-            {
+            {//start
                 SaveFileDialog savefile = new SaveFileDialog();
                 // set a default file name
                 savefile.FileName = "unknown.txt";
@@ -196,19 +316,48 @@ namespace coordinateTextManpulator
 
                 if (savefile.ShowDialog() == DialogResult.OK)
                 {
-                    int i;
+
 
                     using (StreamWriter sw = new StreamWriter(savefile.FileName))
                     {
                         sw.WriteLine("Long-Lat");
-                        for (i = 2; i < indexes.Count; i = i + 2)
+                        for (int i = 2; i < indexes.Count - 1; i = i + 2)
                         {
-                            sw.WriteLine(getLongLat(forbiddenList, indexes[i]));
+                            sw.WriteLine(getLongLat(tripList, indexes[i]));
                         }
-
                     }
                 }
+                SaveFileDialog savefile2 = new SaveFileDialog();
+                // set a default file name
+                savefile.FileName = "unknown.txt";
+                // set filters - this can be done in properties as well
+                savefile.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+
+                if (savefile.ShowDialog() == DialogResult.OK)
+                {
+
+
+                     using (StreamWriter sw2 = new StreamWriter(savefile.FileName))
+                     {
+                                sw2.WriteLine("Long-Lat");
+                                for (int i1 = 2; i1 < indexes.Count; i1 = i1 + 2)
+                                {
+                                    for (int ij = 0;ij< forbiddenList.Length;ij=ij+15)
+                                    {
+                                        string h = getLongLat(tripList, indexes[i1]);
+                                        if (closeness(h, forbiddenList.Substring(ij, distan - 1)))
+                                        {
+                                            sw2.WriteLine(getLongLat(tripList, indexes[i1]));
+                                        }
+                                    }
+                                }
+                     }
+                }
             }
+                           
         }
     }
 }
+
+
+       
