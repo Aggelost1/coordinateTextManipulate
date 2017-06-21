@@ -37,7 +37,6 @@ namespace coordinateTextManpulator
         int fin = -1;
         int ind;
         int indx;
-        int num;
         int coordNum = 0;
         string iso;
         string substr;
@@ -55,7 +54,6 @@ namespace coordinateTextManpulator
         string init = "(";
         string fina = ")";
         int distan = 16;
-        string timeBefor = ",,,,,,,,";
 
 
 
@@ -124,7 +122,7 @@ namespace coordinateTextManpulator
         //subject to change for now its for square of 150m side
         private bool closeness(string s1, string s2)
         {
-            bool rtrn = false;
+            
             string con1a = s1.Substring(0, 2) + s1.Substring(3, 4);
             string con1b = s1.Substring(8, 2) + s1.Substring(11, 4);
             string con2a = s2.Substring(0, 2) + s2.Substring(3, 4);
@@ -140,10 +138,9 @@ namespace coordinateTextManpulator
                 MessageBox.Show("something went wrong trying to convert your coordinates to integers. Most probably you have your report in a different format.");
             }
 
-            if (j < sqrdist1&& k < sqrdist2)
-            {
-                rtrn = true;
-            }
+
+            bool rtrn  = j < sqrdist1 && k < sqrdist2;
+           
             
             return rtrn;
         }
@@ -225,16 +222,30 @@ namespace coordinateTextManpulator
 
         private void stopsButton_Click(object sender, EventArgs e)
         {
-
             if (openFileDialog2.ShowDialog() == DialogResult.OK)
 
             {
 
                 stopsFileName = openFileDialog2.FileName;
+                using (var fltxt = File.OpenText(@stopsFileName))
+                {
+                    string a = fltxt.ReadLine();
+                    string a1 = null;
+                    string a2 = null;
+                    while (a != null)
+                    {
+                        a1 = a.Substring(0);
+                        a1 = coordsMakeProper(a1);
+                        a2 = a2 + a1;
+                        stopsList = a;
+                        a = fltxt.ReadLine();
 
-                stopsList = File.ReadAllText(@stopsFileName);
-                MessageBox.Show(stopsList);
+
+                    }
+                    stopsList = a2;
+                }
             }
+
         }
 
 
@@ -265,14 +276,6 @@ namespace coordinateTextManpulator
                     }
                     forbiddenList = a2;
                 }
-
-
-
-
-                MessageBox.Show("      here:   " + forbiddenList + "   there      " + forbiddenList.Substring(15) + "   there      " + forbiddenList.Substring(30));
-
-
-
             }
         }
 
@@ -285,7 +288,7 @@ namespace coordinateTextManpulator
                 tripFileName = openFileDialog1.FileName;
 
                 tripList = File.ReadAllText(@tripFileName);
-                MessageBox.Show(tripList);
+               
                 coordinateIndexIsolate(tripList);
 
 
@@ -294,8 +297,20 @@ namespace coordinateTextManpulator
 
         private void test_Click(object sender, EventArgs e)
         {
-            
-                MessageBox.Show("hi");
+            string hi = "nothing";
+            string test1 ="33.2744,35.4323";
+            string test2 = "33.2744,35.4323";
+            if (closeness(test1, test2))
+            {
+                hi = "close";
+            }
+            if (!closeness(test1, test2))
+            {
+                hi = "notclose";
+            }
+
+
+            MessageBox.Show(hi);
                 
         }
 
@@ -310,7 +325,7 @@ namespace coordinateTextManpulator
             {//start
                 SaveFileDialog savefile = new SaveFileDialog();
                 // set a default file name
-                savefile.FileName = "unknown.txt";
+                savefile.FileName = "tripcoords.txt";
                 // set filters - this can be done in properties as well
                 savefile.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
 
@@ -329,7 +344,7 @@ namespace coordinateTextManpulator
                 }
                 SaveFileDialog savefile2 = new SaveFileDialog();
                 // set a default file name
-                savefile.FileName = "unknown.txt";
+                savefile.FileName = "stopsNearForbidden.txt";
                 // set filters - this can be done in properties as well
                 savefile.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
 
@@ -342,9 +357,12 @@ namespace coordinateTextManpulator
                                 sw2.WriteLine("Long-Lat");
                                 for (int i1 = 2; i1 < indexes.Count; i1 = i1 + 2)
                                 {
+                                    string h = getLongLat(tripList, indexes[i1]);
+                                   // sw2.WriteLine(getLongLat(tripList, indexes[i1]));
                                     for (int ij = 0;ij< forbiddenList.Length;ij=ij+15)
                                     {
-                                        string h = getLongLat(tripList, indexes[i1]);
+                                        
+                                        
                                         if (closeness(h, forbiddenList.Substring(ij, distan - 1)))
                                         {
                                             sw2.WriteLine(getLongLat(tripList, indexes[i1]));
@@ -353,8 +371,62 @@ namespace coordinateTextManpulator
                                 }
                      }
                 }
+                SaveFileDialog savefile3 = new SaveFileDialog();
+                // set a default file name
+                savefile.FileName = "unknown.txt";
+                // set filters - this can be done in properties as well
+                savefile.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+
+                if (savefile.ShowDialog() == DialogResult.OK)
+                {
+
+
+                    using (StreamWriter sw3 = new StreamWriter(savefile.FileName))
+                    {
+                        
+                        sw3.WriteLine("Long-Lat");
+                        
+                            
+                        for (int ij = 0; ij < stopsList.Length; ij = ij + 15)
+                        {
+                            bool exists = false;
+                            exists = false;
+                            for (int i1 = 2; i1 < indexes.Count; i1 = i1 + 2)
+                            {
+                                string h = getLongLat(tripList, indexes[i1]);
+                                if (closeness(h, stopsList.Substring(ij, distan - 1)))
+                                {
+                                 exists =true;
+                                }
+                                if (exists==false)
+                                {
+                                 sw3.WriteLine(stopsList.Substring(ij, distan - 1));
+                                }
+                                
+                            }
+                        }
+                    }
+                }
             }
                            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string hi = "nothing";
+            string test1 = "33.2759,35.4323";
+            string test2 = "33.2744,35.4323";
+            if (closeness(test1, test2))
+            {
+                hi = "close";
+            }
+            if (!closeness(test1, test2))
+            {
+                hi = "notclose";
+            }
+
+
+            MessageBox.Show(hi);
         }
     }
 }

@@ -50,6 +50,7 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -254,12 +255,23 @@
             this.textBox3.TabIndex = 14;
             this.textBox3.Text = "distance";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(32, 120);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(397, 285);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown3);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.checkBox3);
@@ -310,6 +322,7 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.Button button1;
     }
 }
 
